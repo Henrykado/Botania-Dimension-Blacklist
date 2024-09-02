@@ -51,17 +51,12 @@ public class ASMTransformer implements IClassTransformer, Opcodes {
             boolean isWhitelist = blacklist[0].equals("*");
             for (int i = (isWhitelist ? 1 : 0); i < blacklist.length; i++)
             {
-                if (!isWhitelist)
-                {
-                    if (world.provider.getDimension() == Integer.parseInt(blacklist[i]))
-                        return false;
-                }
-                else
-                {
-                    if (world.provider.getDimension() != Integer.parseInt(blacklist[i]))
-                        return false;
+                if (world.provider.getDimension() == Integer.parseInt(blacklist[i])) {
+                    return isWhitelist;
                 }
             }
+
+            if (isWhitelist) return false;
         }
         return true;
     }
